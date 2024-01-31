@@ -234,7 +234,7 @@ return [
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
         'DNS1D' => Milon\Barcode\Facades\DNS1DFacade::class,
         'DNS2D' => Milon\Barcode\Facades\DNS2DFacade::class,
-        'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
+        'PDF' => Barryvdh\DomPDF\Facade\Pdf::class,
         'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
     ],
 

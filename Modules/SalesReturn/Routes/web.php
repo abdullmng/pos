@@ -11,13 +11,16 @@
 |
 */
 
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Routing\Route;
+
 Route::group(['middleware' => 'auth'], function () {
     //Generate PDF
     Route::get('/sale-returns/pdf/{id}', function ($id) {
         $saleReturn = \Modules\SalesReturn\Entities\SaleReturn::findOrFail($id);
         $customer = \Modules\People\Entities\Customer::findOrFail($saleReturn->customer_id);
 
-        $pdf = \PDF::loadView('salesreturn::print', [
+        $pdf = Pdf::loadView('salesreturn::print', [
             'sale_return' => $saleReturn,
             'customer' => $customer,
         ])->setPaper('a4');

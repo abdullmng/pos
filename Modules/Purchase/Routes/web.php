@@ -11,6 +11,9 @@
 |
 */
 
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Route;
+
 Route::group(['middleware' => 'auth'], function () {
 
     //Generate PDF
@@ -18,7 +21,7 @@ Route::group(['middleware' => 'auth'], function () {
         $purchase = \Modules\Purchase\Entities\Purchase::findOrFail($id);
         $supplier = \Modules\People\Entities\Supplier::findOrFail($purchase->supplier_id);
 
-        $pdf = \PDF::loadView('purchase::print', [
+        $pdf = Pdf::loadView('purchase::print', [
             'purchase' => $purchase,
             'supplier' => $supplier,
         ])->setPaper('a4');

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Barcode;
 
+use Barryvdh\DomPDF\Facade\Pdf;
 use Livewire\Component;
 use Milon\Barcode\Facades\DNS1DFacade;
 use Modules\Product\Entities\Product;
@@ -48,7 +49,7 @@ class ProductTable extends Component
     }
 
     public function getPdf() {
-        $pdf = \PDF::loadView('product::barcode.print', [
+        $pdf = Pdf::loadView('product::barcode.print', [
             'barcodes' => $this->barcodes,
             'price' => $this->product->product_price,
             'name' => $this->product->product_name,
