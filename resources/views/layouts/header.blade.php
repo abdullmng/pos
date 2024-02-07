@@ -10,6 +10,12 @@
 
 </ul>
 <ul class="c-header-nav ml-auto mr-4">
+    <li class="c-header-nav-item mr-3">
+        <a class="btn btn-info btn-pill" href="javascript:void">
+            <i class="bi bi-building mr-1"></i> {{ auth()->user()->branch }}
+        </a>
+    </li>
+
     @can('create_pos_sales')
     <li class="c-header-nav-item mr-3">
         <a class="btn btn-primary btn-pill {{ request()->routeIs('app.pos.index') ? 'disabled' : '' }}" href="{{ route('app.pos.index') }}">
@@ -17,12 +23,6 @@
         </a>
     </li>
     @endcan
-
-    <li class="c-header-nav-item mr-3">
-        <a class="btn btn-info btn-pill" href="javascript:void">
-            <i class="bi bi-cart mr-1"></i> {{ auth()->user()->branch }}
-        </a>
-    </li>
 
     @can('show_notifications')
     <li class="c-header-nav-item dropdown d-md-down-none mr-2">
