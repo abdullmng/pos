@@ -81,7 +81,7 @@
 
                             <div class="form-group">
                                 <label for="branch">Branch</label>
-                                <select class="form-control" name="branch_id" id="branch" required>
+                                <select class="form-control" name="branch_id" id="branch">
                                     <option value="" selected disabled>Select Branch</option>
                                     @foreach ($branches as $branch)
                                         <option value="{{ $branch->id }}">{{ $branch->name }}</option>
