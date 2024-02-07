@@ -41,7 +41,7 @@
                             </div>
 
                             <div class="form-row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="form-group">
                                         <label for="category_id">Category <span class="text-danger">*</span></label>
                                         <select name="category_id" id="category_id" class="form-control" required>
@@ -51,10 +51,20 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="form-group">
                                         <label for="amount">Amount <span class="text-danger">*</span></label>
                                         <input id="amount" type="text" class="form-control" name="amount" required value="{{ $expense->amount }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="branch">Branch</label>
+                                        <select name="branch_id" id="branch_id" class="form-control form-select">
+                                            @foreach ($branches as $branch)
+                                                <option value="{{ $branch->id }}" {{ $expense->branch_id == $branch->id ? 'selected': '' }}>{{ $branch->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                             </div>

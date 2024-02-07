@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Pos;
 
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Modules\Product\Entities\Product;
@@ -31,6 +32,7 @@ class ProductList extends Component
             'products' => Product::when($this->category_id, function ($query) {
                 return $query->where('category_id', $this->category_id);
             })
+            ->where('branch_id', Auth::user()->branch_id)
             ->paginate($this->limit)
         ]);
     }

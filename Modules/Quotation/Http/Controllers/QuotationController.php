@@ -5,8 +5,10 @@ namespace Modules\Quotation\Http\Controllers;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Modules\Branch\Entities\Branch;
 use Modules\People\Entities\Customer;
 use Modules\Product\Entities\Product;
 use Modules\Quotation\DataTables\QuotationsDataTable;
@@ -29,14 +31,19 @@ class QuotationController extends Controller
         abort_if(Gate::denies('create_quotations'), 403);
 
         Cart::instance('quotation')->destroy();
-
-        return view('quotation::create');
+        $branches = Branch::all();
+        if (!is_null(Auth::user()->branch_id))
+        {
+            $branches = Branch::where('id', Auth::user()->branch_id)->get();
+        }
+        return view('quotation::create', compact('branches'));
     }
 
 
     public function store(StoreQuotationRequest $request) {
         DB::transaction(function () use ($request) {
             $quotation = Quotation::create([
+                'branch_id' => $request->branch_id,
                 'date' => $request->date,
                 'customer_id' => $request->customer_id,
                 'customer_name' => Customer::findOrFail($request->customer_id)->customer_name,
@@ -112,7 +119,12 @@ class QuotationController extends Controller
             ]);
         }
 
-        return view('quotation::edit', compact('quotation'));
+        $branches = Branch::all();
+        if (!is_null(Auth::user()->branch_id))
+        {
+            $branches = Branch::where('id', Auth::user()->branch_id)->get();
+        }
+        return view('quotation::edit', compact('quotation', 'branches'));
     }
 
 
@@ -123,6 +135,7 @@ class QuotationController extends Controller
             }
 
             $quotation->update([
+                'branch_id' => $request->branch_id,
                 'date' => $request->date,
                 'reference' => $request->reference,
                 'customer_id' => $request->customer_id,

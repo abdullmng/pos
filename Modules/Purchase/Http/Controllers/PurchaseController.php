@@ -5,8 +5,10 @@ namespace Modules\Purchase\Http\Controllers;
 use Modules\Purchase\DataTables\PurchaseDataTable;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Modules\Branch\Entities\Branch;
 use Modules\People\Entities\Supplier;
 use Modules\Product\Entities\Product;
 use Modules\Purchase\Entities\Purchase;
@@ -29,8 +31,12 @@ class PurchaseController extends Controller
         abort_if(Gate::denies('create_purchases'), 403);
 
         Cart::instance('purchase')->destroy();
-
-        return view('purchase::create');
+        $branches = Branch::all();
+        if (!is_null(Auth::user()->branch_id))
+        {
+            $branches = Branch::where('id', Auth::user()->branch_id)->get();
+        }
+        return view('purchase::create', compact('branches'));
     }
 
 
@@ -46,6 +52,7 @@ class PurchaseController extends Controller
             }
 
             $purchase = Purchase::create([
+                'branch_id' => $request->branch_id,
                 'date' => $request->date,
                 'supplier_id' => $request->supplier_id,
                 'supplier_name' => Supplier::findOrFail($request->supplier_id)->supplier_name,
@@ -142,7 +149,12 @@ class PurchaseController extends Controller
             ]);
         }
 
-        return view('purchase::edit', compact('purchase'));
+        $branches = Branch::all();
+        if (!is_null(Auth::user()->branch_id))
+        {
+            $branches = Branch::where('id', Auth::user()->branch_id)->get();
+        }
+        return view('purchase::edit', compact('purchase','branches'));
     }
 
 
@@ -168,6 +180,7 @@ class PurchaseController extends Controller
             }
 
             $purchase->update([
+                'branch_id' => $request->branch_id,
                 'date' => $request->date,
                 'reference' => $request->reference,
                 'supplier_id' => $request->supplier_id,

@@ -4,6 +4,7 @@ namespace Modules\Purchase\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\Branch\Entities\Branch;
 
 class Purchase extends Model
 {
@@ -54,5 +55,10 @@ class Purchase extends Model
 
     public function getDiscountAmountAttribute($value) {
         return $value / 100;
+    }
+
+    public function getBranchAttribute()
+    {
+        return Branch::find($this->branch_id)?->name ?? 'NA';
     }
 }

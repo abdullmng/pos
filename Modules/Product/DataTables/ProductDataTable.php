@@ -32,6 +32,9 @@ class ProductDataTable extends DataTable
             ->addColumn('product_quantity', function ($data) {
                 return $data->product_quantity . ' ' . $data->product_unit;
             })
+            ->addColumn('branch', function ($data) {
+                return $data->branch;
+            })
             ->rawColumns(['product_image']);
     }
 
@@ -91,6 +94,10 @@ class ProductDataTable extends DataTable
 
             Column::computed('product_quantity')
                 ->title('Quantity')
+                ->className('text-center align-middle'),
+
+            Column::computed('branch')
+                ->title('Branch')
                 ->className('text-center align-middle'),
 
             Column::computed('action')

@@ -5,8 +5,10 @@ namespace Modules\Sale\Http\Controllers;
 use Modules\Sale\DataTables\SalesDataTable;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Modules\Branch\Entities\Branch;
 use Modules\People\Entities\Customer;
 use Modules\Product\Entities\Product;
 use Modules\Sale\Entities\Sale;
@@ -29,8 +31,14 @@ class SaleController extends Controller
         abort_if(Gate::denies('create_sales'), 403);
 
         Cart::instance('sale')->destroy();
-
-        return view('sale::create');
+        $branches = Branch::all();
+        $customers = Customer::all();
+        if (!is_null(Auth::user()->branch_id))
+        {
+            $branches = Branch::where('id', Auth::user()->branch_id)->get();
+            $customers = Customer::where('branch_id', Auth::user()->branch_id)->get();
+        }
+        return view('sale::create', compact('customers','branches'));
     }
 
 
@@ -47,6 +55,7 @@ class SaleController extends Controller
             }
 
             $sale = Sale::create([
+                'branch_id' => $request->branch_id,
                 'date' => $request->date,
                 'customer_id' => $request->customer_id,
                 'customer_name' => Customer::findOrFail($request->customer_id)->customer_name,
@@ -142,8 +151,14 @@ class SaleController extends Controller
                 ]
             ]);
         }
-
-        return view('sale::edit', compact('sale'));
+        $branches = Branch::all();
+        $customers = Customer::all();
+        if (!is_null(Auth::user()->branch_id))
+        {
+            $branches = Branch::where('id', Auth::user()->branch_id)->get();
+            $customers = Customer::where('branch_id', Auth::user()->branch_id)->get();
+        }
+        return view('sale::edit', compact('sale', 'customers', 'branches'));
     }
 
 
@@ -171,6 +186,7 @@ class SaleController extends Controller
             }
 
             $sale->update([
+                'branch_id' => $request->branch_id,
                 'date' => $request->date,
                 'reference' => $request->reference,
                 'customer_id' => $request->customer_id,

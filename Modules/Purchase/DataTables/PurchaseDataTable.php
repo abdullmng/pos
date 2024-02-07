@@ -32,6 +32,9 @@ class PurchaseDataTable extends DataTable
             })
             ->addColumn('action', function ($data) {
                 return view('purchase::partials.actions', compact('data'));
+            })
+            ->addColumn('branch', function ($data) {
+                return $data->branch;
             });
     }
 
@@ -82,6 +85,10 @@ class PurchaseDataTable extends DataTable
                 ->className('text-center align-middle'),
 
             Column::computed('payment_status')
+                ->className('text-center align-middle'),
+
+            Column::computed('branch')
+                ->title('Branch')
                 ->className('text-center align-middle'),
 
             Column::computed('action')

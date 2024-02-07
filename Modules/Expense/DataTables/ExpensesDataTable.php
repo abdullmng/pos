@@ -18,6 +18,9 @@ class ExpensesDataTable extends DataTable
             ->addColumn('amount', function ($data) {
                 return format_currency($data->amount);
             })
+            ->addColumn('branch', function ($data) {
+                return $data->branch;
+            })
             ->addColumn('action', function ($data) {
                 return view('expense::expenses.partials.actions', compact('data'));
             });
@@ -64,6 +67,10 @@ class ExpensesDataTable extends DataTable
                 ->className('text-center align-middle'),
 
             Column::make('details')
+                ->className('text-center align-middle'),
+
+            Column::make('branch')
+                ->title('Branch')
                 ->className('text-center align-middle'),
 
             Column::computed('action')

@@ -298,6 +298,26 @@
     </li>
 @endcan
 
+@can('access_branches')
+    <li class="c-sidebar-nav-item c-sidebar-nav-dropdown {{ request()->routeIs('branches*') ? 'c-show' : '' }}">
+        <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
+            <i class="c-sidebar-nav-icon bi bi-building" style="line-height: 1;"></i> Branch Management
+        </a>
+        <ul class="c-sidebar-nav-dropdown-items">
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link {{ request()->routeIs('branches.create') ? 'c-active' : '' }}" href="{{ route('branches.create') }}">
+                    <i class="c-sidebar-nav-icon bi bi-plus" style="line-height: 1;"></i> Create Branch
+                </a>
+            </li>
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link {{ request()->routeIs('branches.index') ? 'c-active' : '' }}" href="{{ route('branches.index') }}">
+                    <i class="c-sidebar-nav-icon bi bi-list" style="line-height: 1;"></i> All Branches
+                </a>
+            </li>
+        </ul>
+    </li>
+@endcan
+
 @can('access_currencies|access_settings')
     <li class="c-sidebar-nav-item c-sidebar-nav-dropdown {{ request()->routeIs('currencies*') || request()->routeIs('units*') ? 'c-show' : '' }}">
         <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">

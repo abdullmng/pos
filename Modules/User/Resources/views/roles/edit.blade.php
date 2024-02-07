@@ -823,6 +823,68 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <!-- Branches Permission -->
+                                <div class="col-lg-4 col-md-6 mb-3">
+                                    <div class="card h-100 border-0 shadow">
+                                        <div class="card-header">
+                                            Branches
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                               id="access_branches" name="permissions[]"
+                                                               value="access_branches" {{ $role->hasPermissionTo('access_branches') ? 'checked' : '' }}>
+                                                        <label class="custom-control-label" for="access_branches">Access</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                               id="show_branches" name="permissions[]"
+                                                               value="show_branches" {{ $role->hasPermissionTo('show_branches') ? 'checked' : '' }}>
+                                                        <label class="custom-control-label" for="show_branches">View</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                               id="create_branches" name="permissions[]"
+                                                               value="create_branches" {{ $role->hasPermissionTo('create_branches') ? 'checked' : '' }}>
+                                                        <label class="custom-control-label" for="create_branches">Create</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                               id="edit_branches" name="permissions[]"
+                                                               value="edit_branches" {{ $role->hasPermissionTo('edit_branches') ? 'checked' : '' }}>
+                                                        <label class="custom-control-label" for="edit_branches">Edit</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                               id="update_branches" name="permissions[]"
+                                                               value="update_branches" {{ $role->hasPermissionTo('update_branches') ? 'checked' : '' }}>
+                                                        <label class="custom-control-label" for="update_branches">Update</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                               id="delete_branches" name="permissions[]"
+                                                               value="delete_branches" {{ $role->hasPermissionTo('delete_branches') ? 'checked' : '' }}>
+                                                        <label class="custom-control-label" for="delete_branches">Delete</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>

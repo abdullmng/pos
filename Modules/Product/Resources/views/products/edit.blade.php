@@ -26,13 +26,23 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="form-row">
-                                <div class="col-md-7">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="branch">Branch <span class="text-danger">*</span></label>
+                                        <select name="branch_id" id="branch_id" class="form-control form-select">
+                                            @foreach ($branches as $branch)
+                                                <option value="{{ $branch->id }}" {{ $product->branch_id == $branch->id ? 'selected': '' }}>{{ $branch->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="product_name">Product Name <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="product_name" required value="{{ $product->product_name }}">
                                     </div>
                                 </div>
-                                <div class="col-md-5">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="product_code">Code <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="product_code" required value="{{ $product->product_code }}">

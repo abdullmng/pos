@@ -5,6 +5,7 @@ namespace Modules\Expense\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Carbon;
+use Modules\Branch\Entities\Branch;
 
 class Expense extends Model
 {
@@ -35,5 +36,10 @@ class Expense extends Model
 
     public function getAmountAttribute($value) {
         return ($value / 100);
+    }
+
+    public function getBranchAttribute()
+    {
+        return Branch::find($this->branch_id)?->name ?? 'NA';
     }
 }

@@ -6,8 +6,10 @@ use Modules\Product\DataTables\ProductDataTable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
+use Modules\Branch\Entities\Branch;
 use Modules\Product\Entities\Product;
 use Modules\Product\Http\Requests\StoreProductRequest;
 use Modules\Product\Http\Requests\UpdateProductRequest;
@@ -25,8 +27,12 @@ class ProductController extends Controller
 
     public function create() {
         abort_if(Gate::denies('create_products'), 403);
-
-        return view('product::products.create');
+        $branches = Branch::all();
+        if (!is_null(Auth::user()->branch_id))
+        {
+            $branches = Branch::where('id', Auth::user()->branch_id)->get();
+        }
+        return view('product::products.create', compact('branches'));
     }
 
 
@@ -54,8 +60,12 @@ class ProductController extends Controller
 
     public function edit(Product $product) {
         abort_if(Gate::denies('edit_products'), 403);
-
-        return view('product::products.edit', compact('product'));
+        $branches = Branch::all();
+        if (!is_null(Auth::user()->branch_id))
+        {
+            $branches = Branch::where('id', Auth::user()->branch_id)->get();
+        }
+        return view('product::products.edit', compact('product', 'branches'));
     }
 
 

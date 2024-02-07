@@ -24,6 +24,9 @@ class SalesDataTable extends DataTable
             ->addColumn('due_amount', function ($data) {
                 return format_currency($data->due_amount);
             })
+            ->addColumn('branch', function ($data) {
+                return $data->branch;
+            })
             ->addColumn('status', function ($data) {
                 return view('sale::partials.status', compact('data'));
             })
@@ -82,6 +85,10 @@ class SalesDataTable extends DataTable
                 ->className('text-center align-middle'),
 
             Column::computed('payment_status')
+                ->className('text-center align-middle'),
+
+            Column::computed('branch')
+                ->title('Branch')
                 ->className('text-center align-middle'),
 
             Column::computed('action')

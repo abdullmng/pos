@@ -3,6 +3,7 @@
     "Upload": true,
     "User": true,
     "Adjustment": true,
+    "Branch": true,
     "Expense": true,
     "People": true,
     "Currency": true,

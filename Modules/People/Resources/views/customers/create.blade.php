@@ -25,13 +25,23 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="form-row">
-                                <div class="col-lg-6">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="branch">Branch</label>
+                                        <select name="branch_id" id="branch_id" class="form-control form-select">
+                                            @foreach ($branches as $branch)
+                                                <option value="{{ $branch->id }}">{{ $branch->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
                                     <div class="form-group">
                                         <label for="customer_name">Customer Name <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="customer_name" required>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="form-group">
                                         <label for="customer_email">Email <span class="text-danger">*</span></label>
                                         <input type="email" class="form-control" name="customer_email" required>

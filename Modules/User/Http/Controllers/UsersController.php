@@ -7,9 +7,11 @@ use App\Models\User;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Modules\Branch\Entities\Branch;
 use Modules\Upload\Entities\Upload;
 
 class UsersController extends Controller
@@ -23,8 +25,12 @@ class UsersController extends Controller
 
     public function create() {
         abort_if(Gate::denies('access_user_management'), 403);
-
-        return view('user::users.create');
+        $branches = Branch::all();
+        if (!is_null(Auth::user()->branch_id))
+        {
+            $branches = Branch::where('id', Auth::user()->branch_id)->get();
+        }
+        return view('user::users.create', compact('branches'));
     }
 
 
@@ -38,6 +44,7 @@ class UsersController extends Controller
         ]);
 
         $user = User::create([
+            'branch_id' => $request->branch_id,
             'name'     => $request->name,
             'email'    => $request->email,
             'password' => Hash::make($request->password),
@@ -65,8 +72,12 @@ class UsersController extends Controller
 
     public function edit(User $user) {
         abort_if(Gate::denies('access_user_management'), 403);
-
-        return view('user::users.edit', compact('user'));
+        $branches = Branch::all();
+        if (!is_null(Auth::user()->branch_id))
+        {
+            $branches = Branch::where('id', Auth::user()->branch_id)->get();
+        }
+        return view('user::users.edit', compact('user', 'branches'));
     }
 
 
@@ -79,6 +90,7 @@ class UsersController extends Controller
         ]);
 
         $user->update([
+            'branch_id' => $request->branch_id,
             'name'     => $request->name,
             'email'    => $request->email,
             'is_active' => $request->is_active

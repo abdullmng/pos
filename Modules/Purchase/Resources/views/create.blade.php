@@ -96,6 +96,18 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="branch">Branch</label>
+                                        <select name="branch_id" id="branch_id" class="form-control form-select">
+                                            @foreach ($branches as $branch)
+                                                <option value="{{ $branch->id }}">{{ $branch->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="form-group">
                                 <label for="note">Note (If Needed)</label>

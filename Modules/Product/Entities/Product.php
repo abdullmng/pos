@@ -4,6 +4,7 @@ namespace Modules\Product\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\Branch\Entities\Branch;
 use Modules\Product\Notifications\NotifyQuantityAlert;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -47,5 +48,10 @@ class Product extends Model implements HasMedia
 
     public function getProductPriceAttribute($value) {
         return ($value / 100);
+    }
+
+    public function getBranchAttribute()
+    {
+        return Branch::find($this->branch_id)?->name ?? 'NA';
     }
 }

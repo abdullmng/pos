@@ -20,6 +20,9 @@ class UsersDataTable extends DataTable
                     'roles' => $data->getRoleNames()
                 ]);
             })
+            ->addColumn('branch', function ($data) {
+                return $data->branch;
+            })
             ->addColumn('action', function ($data) {
                 return view('user::users.partials.actions', compact('data'));
             })
@@ -84,6 +87,9 @@ class UsersDataTable extends DataTable
                 ->className('text-center align-middle'),
 
             Column::computed('status')
+                ->className('text-center align-middle'),
+
+            Column::computed('branch')
                 ->className('text-center align-middle'),
 
             Column::computed('action')

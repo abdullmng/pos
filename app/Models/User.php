@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Modules\Branch\Entities\Branch;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\File;
@@ -57,5 +58,9 @@ class User extends Authenticatable implements HasMedia
 
     public function scopeIsActive(Builder $builder) {
         return $builder->where('is_active', 1);
+    }
+
+    public function getBranchAttribute() {
+        return Branch::find($this->branch_id)?->name ?? 'NA';
     }
 }

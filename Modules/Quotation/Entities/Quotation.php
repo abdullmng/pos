@@ -5,6 +5,7 @@ namespace Modules\Quotation\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Carbon;
+use Modules\Branch\Entities\Branch;
 use Modules\People\Entities\Customer;
 
 class Quotation extends Model
@@ -56,5 +57,10 @@ class Quotation extends Model
 
     public function getDiscountAmountAttribute($value) {
         return $value / 100;
+    }
+
+    public function getBranchAttribute()
+    {
+        return Branch::find($this->branch_id)?->name ?? 'NA';
     }
 }

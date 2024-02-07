@@ -6,7 +6,9 @@ use Modules\People\DataTables\CustomersDataTable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Modules\Branch\Entities\Branch;
 use Modules\People\Entities\Customer;
 
 class CustomersController extends Controller
@@ -21,8 +23,12 @@ class CustomersController extends Controller
 
     public function create() {
         abort_if(Gate::denies('create_customers'), 403);
-
-        return view('people::customers.create');
+        $branches = Branch::all();
+        if (!is_null(Auth::user()->branch_id))
+        {
+            $branches = Branch::where('id', Auth::user()->branch_id)->get();
+        }
+        return view('people::customers.create', compact('branches'));
     }
 
 
@@ -30,6 +36,7 @@ class CustomersController extends Controller
         abort_if(Gate::denies('create_customers'), 403);
 
         $request->validate([
+            'branch_id' => 'required',
             'customer_name'  => 'required|string|max:255',
             'customer_phone' => 'required|max:255',
             'customer_email' => 'required|email|max:255',
@@ -39,6 +46,7 @@ class CustomersController extends Controller
         ]);
 
         Customer::create([
+            'branch_id' => $request->branch_id,
             'customer_name'  => $request->customer_name,
             'customer_phone' => $request->customer_phone,
             'customer_email' => $request->customer_email,
@@ -62,8 +70,12 @@ class CustomersController extends Controller
 
     public function edit(Customer $customer) {
         abort_if(Gate::denies('edit_customers'), 403);
-
-        return view('people::customers.edit', compact('customer'));
+        $branches = Branch::all();
+        if (!is_null(Auth::user()->branch_id))
+        {
+            $branches = Branch::where('id', Auth::user()->branch_id)->get();
+        }
+        return view('people::customers.edit', compact('customer', 'branches'));
     }
 
 
@@ -71,6 +83,7 @@ class CustomersController extends Controller
         abort_if(Gate::denies('update_customers'), 403);
 
         $request->validate([
+            'branch_id' => 'required',
             'customer_name'  => 'required|string|max:255',
             'customer_phone' => 'required|max:255',
             'customer_email' => 'required|email|max:255',
@@ -80,6 +93,7 @@ class CustomersController extends Controller
         ]);
 
         $customer->update([
+            'branch_id' => $request->branch_id,
             'customer_name'  => $request->customer_name,
             'customer_phone' => $request->customer_phone,
             'customer_email' => $request->customer_email,

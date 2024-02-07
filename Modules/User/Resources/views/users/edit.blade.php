@@ -62,6 +62,16 @@
                                     <option value="2" {{ $user->is_active == 2 ? 'selected' : ''}}>Deactive</option>
                                 </select>
                             </div>
+
+                            <div class="form-group">
+                                <label for="branch">Branch</label>
+                                <select class="form-control" name="branch_id" id="branch" required>
+                                    <option value="">Select Branch</option>
+                                    @foreach ($branches as $branch)
+                                        <option value="{{ $branch->id }}" {{ $user->branch_id == $branch->id ? 'selected' : '' }}>{{ $branch->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>

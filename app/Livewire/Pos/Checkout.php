@@ -22,10 +22,12 @@ class Checkout extends Component
     public $data;
     public $customer_id;
     public $total_amount;
+    public $branches;
 
-    public function mount($cartInstance, $customers) {
+    public function mount($cartInstance, $customers, $branches) {
         $this->cart_instance = $cartInstance;
         $this->customers = $customers;
+        $this->branches = $branches;
         $this->global_discount = 0;
         $this->global_tax = 0;
         $this->shipping = 0.00;

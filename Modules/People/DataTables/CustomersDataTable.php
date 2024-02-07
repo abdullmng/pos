@@ -16,6 +16,9 @@ class CustomersDataTable extends DataTable
     public function dataTable($query) {
         return datatables()
             ->eloquent($query)
+            ->addColumn('branch', function ($data) {
+                return $data->branch;
+            })
             ->addColumn('action', function ($data) {
                 return view('people::customers.partials.actions', compact('data'));
             });
@@ -55,6 +58,9 @@ class CustomersDataTable extends DataTable
                 ->className('text-center align-middle'),
 
             Column::make('customer_phone')
+                ->className('text-center align-middle'),
+
+            Column::make('branch')
                 ->className('text-center align-middle'),
 
             Column::computed('action')

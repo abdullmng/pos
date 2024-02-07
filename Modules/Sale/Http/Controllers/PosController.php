@@ -6,7 +6,9 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Modules\Branch\Entities\Branch;
 use Modules\People\Entities\Customer;
 use Modules\Product\Entities\Category;
 use Modules\Product\Entities\Product;
@@ -21,10 +23,18 @@ class PosController extends Controller
     public function index() {
         Cart::instance('sale')->destroy();
 
-        $customers = Customer::all();
+        
         $product_categories = Category::all();
 
-        return view('sale::pos.index', compact('product_categories', 'customers'));
+        $branches = Branch::all();
+        $customers = Customer::all();
+        if (!is_null(Auth::user()->branch_id))
+        {
+            $branches = Branch::where('id', Auth::user()->branch_id)->get();
+            $customers = Customer::where('branch_id', Auth::user()->branch_id)->get();
+        }
+
+        return view('sale::pos.index', compact('product_categories', 'customers', 'branches'));
     }
 
 
@@ -41,6 +51,7 @@ class PosController extends Controller
             }
 
             $sale = Sale::create([
+                'branch_id' => $request->branch_id, 
                 'date' => now()->format('Y-m-d'),
                 'reference' => 'PSL',
                 'customer_id' => $request->customer_id,
