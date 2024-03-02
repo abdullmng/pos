@@ -49,7 +49,7 @@ class PosController extends Controller
             } else {
                 $payment_status = 'Paid';
             }
-
+            dd($request->branch_id);
             $sale = Sale::create([
                 'branch_id' => $request->branch_id, 
                 'date' => now()->format('Y-m-d'),

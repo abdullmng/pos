@@ -23,6 +23,7 @@ class Checkout extends Component
     public $customer_id;
     public $total_amount;
     public $branches;
+    public $branch_id;
 
     public function mount($cartInstance, $customers, $branches) {
         $this->cart_instance = $cartInstance;
@@ -51,10 +52,10 @@ class Checkout extends Component
     }
 
     public function proceed() {
-        if ($this->customer_id != null) {
+        if ($this->customer_id != null && $this->branch_id != null) {
             $this->dispatch('showCheckoutModal');
         } else {
-            session()->flash('message', 'Please Select Customer!');
+            session()->flash('message', 'Please Select Customer and branch!');
         }
     }
 

@@ -39,6 +39,10 @@ class SalesDataTable extends DataTable
     }
 
     public function query(Sale $model) {
+        if (!is_null(auth()->user()->branch_id))
+        {
+            return $model->where('branch_id', auth()->user()->branch_id);
+        }
         return $model->newQuery();
     }
 

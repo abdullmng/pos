@@ -24,6 +24,7 @@
                     @endif
                     <div class="row">
                         <div class="col-lg-7">
+                            <input type="hidden" name="branch_id" value="{{ $branch_id }}">
                             <input type="hidden" value="{{ $customer_id }}" name="customer_id">
                             <input type="hidden" value="{{ $global_tax }}" name="tax_percentage">
                             <input type="hidden" value="{{ $global_discount }}" name="discount_percentage">
